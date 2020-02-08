@@ -33,6 +33,7 @@
 </head> 
 <body>
 	<div class="container">
+		<h6 style="text-align: center;color: green;" id="response_msg"></h6>
 	  <h2 style="text-align: center;">Question Bnak Entry</h2>
 	  <h5 style="text-align: center;">Examination Information</h5>
 	  <form method="POST" id="question_bank" name="question_bank" action="#">
@@ -54,8 +55,8 @@
 			    	</select>
 			    </div>
 			    <div class="form-group col-sm-2">
-			      <label for="cbo_exam_taker">Exam Taker</label>
-			       <select class="form-control form-control-sm" id="cbo_exam_taker">
+			      <label for="cbo_exam_taker_id">Exam Taker</label>
+			       <select class="form-control form-control-sm" id="cbo_exam_taker_id" name="cbo_exam_taker_id">
 				      <?php
 				      foreach ($exam_taker_arr as $key => $value) {
 				      ?>
@@ -102,7 +103,7 @@
 				</div>
 				<div class="form-group col-sm-1">
 			      <label for="txt_question_number">Q. Number</label>
-			       <input type="number" class="form-control form-control-sm" id="txt_question_number" name="txt_question_number" placeholder="Enter Exam Name">
+			       <input type="number" class="form-control form-control-sm" id="txt_question_number" name="txt_question_number" placeholder="Enter Exam Name" min="1" max="200">
 				</div>
 		    </div>
 			<h5 style="text-align: center;">Question Option</h5>
@@ -133,61 +134,71 @@
 			    <div class="form-group col-sm-3">
 			      <label for="cbo_answer_opt1">Option One</label>
 			      <select class="form-control form-control-sm" id="cbo_answer_opt1" name="cbo_answer_opt1">
-					      <?php
-					      foreach ($question_type_arr as $key => $value) {
-					      ?>
-					      <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
-					      <?php
-					  		}
-					      ?>
+					    <?php
+					      foreach ($yes_no as $key => $value) {
+					     
+					     if($key==2) { $select = 'selected="selected"';}else{ $select="";}
+					      	?>
+					      	 <option value="<?php echo $key; ?>" <?php echo $select; ?> ><?php echo $value; ?></option>
+					      	<?php
+					      	}
+					    ?>
 				    </select>
 			    </div>
 			    <div class="form-group col-sm-3">
 			      <label for="cbo_answer_opt2">Option Two</label>
 			      <select class="form-control form-control-sm" id="cbo_answer_opt2" name="cbo_answer_opt2">
-					      <?php
-					      foreach ($question_type_arr as $key => $value) {
-					      ?>
-					      <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
-					      <?php
-					  		}
-					      ?>
+					    <?php
+					      foreach ($yes_no as $key => $value) {
+					     
+					     if($key==2) { $select = 'selected="selected"';}else{ $select="";}
+					      	?>
+					      	 <option value="<?php echo $key; ?>" <?php echo $select; ?> ><?php echo $value; ?></option>
+					      	<?php
+					      	}
+					    ?>
 				    </select>
 			    </div>
 			    <div class="form-group col-sm-2">
 			      <label for="cbo_answer_opt3">Option Three</label>
 			      <select class="form-control form-control-sm" id="cbo_answer_opt3" name="cbo_answer_opt3">
-					      <?php
-					      foreach ($question_type_arr as $key => $value) {
-					      ?>
-					      <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
-					      <?php
-					  		}
-					      ?>
+					    <?php
+					      foreach ($yes_no as $key => $value) {
+					     
+					     if($key==2) { $select = 'selected="selected"';}else{ $select="";}
+					      	?>
+					      	 <option value="<?php echo $key; ?>" <?php echo $select; ?> ><?php echo $value; ?></option>
+					      	<?php
+					      	}
+					    ?>
 				    </select>
 			    </div>
 			    <div class="form-group col-sm-2">
 			      <label for="cbo_answer_opt4">Option Four</label>
 			      <select class="form-control form-control-sm" id="cbo_answer_opt4" name="cbo_answer_opt4">
-					      <?php
-					      foreach ($question_type_arr as $key => $value) {
-					      ?>
-					      <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
-					      <?php
-					  		}
-					      ?>
+					    <?php
+					      foreach ($yes_no as $key => $value) {
+					     
+					     if($key==2) { $select = 'selected="selected"';}else{ $select="";}
+					      	?>
+					      	 <option value="<?php echo $key; ?>" <?php echo $select; ?> ><?php echo $value; ?></option>
+					      	<?php
+					      	}
+					    ?>
 				    </select>
 			    </div>
 			    <div class="form-group col-sm-2">
 			      <label for="cbo_answer_opt5">Option Five</label>
 			      <select class="form-control form-control-sm" id="cbo_answer_opt5" name="cbo_answer_opt5">
-					      <?php
-					      foreach ($question_type_arr as $key => $value) {
-					      ?>
-					      <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
-					      <?php
-					  		}
-					      ?>
+					    <?php
+					      foreach ($yes_no as $key => $value) {
+					     
+					     if($key==2) { $select = 'selected="selected"';}else{ $select="";}
+					      	?>
+					      	 <option value="<?php echo $key; ?>" <?php echo $select; ?> ><?php echo $value; ?></option>
+					      	<?php
+					      	}
+					    ?>
 				    </select>
 			    </div>
 			</div>
@@ -209,24 +220,26 @@
 	
 	$("#question_bank").submit( function () {   
 		var data = $(this).serialize();
-		var url  = "requires/question_bank_entry_controller.php";
+		var url  = "requires/question_bank_entry_controller.php?action=save_update";
 	    $.ajax({   
 	        type: "POST",
 	        data : data,
 	        cache: false,  
 	        url: url,   
-	        success: function(data){
-	            //$("#results").html(data); 
-	            alert(data);                      
+	        success: function(data){      
+	            if (data==1) {
+					$("#response_msg").html("Data Success Fully Saved.");
+					$("#response_msg").fadeOut(1000);
+	            }else if (data==2) {
+	            	$("#response_msg").html("Data Not Inserted.");
+					$("#response_msg").fadeOut(1000);
+	            }               
 	        }   
 	    });   
 	    return false;   
 	});
 
 </script>
-
-
-	
 	<script type="text/javascript">
 		$('#txt_exam_date').datetimepicker({
 			timepicker:false,

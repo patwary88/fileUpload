@@ -7,4 +7,5 @@
 
 	$exam_taker_arr = array(1=>"Ahsanullah University of Science and Technology ( AUST )",2=>"Arts Faculty ( DU )");
 	$question_type_arr = array(1=>'Bangla',2=>'English',3=>'Math',4=>'General Knowledge',5=>'ICT');
+	$yes_no = array(1=>"Yes",2=>"No");
 ?>
