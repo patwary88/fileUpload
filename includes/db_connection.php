@@ -5,6 +5,9 @@
 	$DB_PASS = "";
 	$DB_NAME = "study_room";
 	$conn = mysqli_connect($DB_HOST,$DB_USER,$DB_PASS,$DB_NAME);
+	mysqli_query($conn,'SET CHARACTER SET utf8'); 
+	mysqli_query($conn,"SET SESSION collation_connection ='utf8_general_ci'");
+
 
 	function sql_select($query){
 		global $conn;

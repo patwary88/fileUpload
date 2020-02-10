@@ -1,5 +1,12 @@
 <?php
     require_once('../includes/common.php');
+
+    $qusnum  = return_max_id("sr_pre_exam_question_dtls","question_number",$where_cond="");
+    if (empty($qusnum)) {
+    	$qusNumber = 1;
+    }else{
+    	$qusNumber = $qusnum+1;
+    }
 ?>
 <!doctype html>
 <html lang="en">
@@ -7,6 +14,7 @@
 <meta charset="utf-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>File Upload</title>
 
 <link rel="stylesheet" type="text/css" href="../resources/bootstrap.min.css">
@@ -26,17 +34,13 @@
   		line-height: 10px; 
 	}
 </style>
-
-
-	
-
 </head> 
 <body>
 	<div class="container">
 		<h6 style="text-align: center;color: green;" id="response_msg"></h6>
 	  <h2 style="text-align: center;">Question Bnak Entry</h2>
 	  <h5 style="text-align: center;">Examination Information</h5>
-	  <form method="POST" id="question_bank" name="question_bank" action="#">
+	  <form method="POST" id="question_bank" name="question_bank" action="#" accept-charset="utf-8">
 			<div class="form-row">
 			    <div class="form-group col-sm-3">
 			      <label for="exam_name">Exam Name</label>
@@ -103,7 +107,7 @@
 				</div>
 				<div class="form-group col-sm-1">
 			      <label for="txt_question_number">Q. Number</label>
-			       <input type="number" class="form-control form-control-sm" id="txt_question_number" name="txt_question_number" placeholder="Enter Exam Name" min="1" max="200">
+			       <input type="number" class="form-control form-control-sm" id="txt_question_number" name="txt_question_number" placeholder="Enter Exam Name" min="1" max="200" value="<?php echo $qusNumber; ?>">
 				</div>
 		    </div>
 			<h5 style="text-align: center;">Question Option</h5>
@@ -208,7 +212,7 @@
 			    <textarea class="form-control" id="txt_question_solution" name="txt_question_solution" rows="2"></textarea>
 			</div>
 
-			<button type="submit" class="btn btn-primary">Sign in</button>
+			<button type="submit" class="btn btn-primary btn-sm">Save</button>
 		</form>
 	</div>
 	<script type="text/javascript" src="../resources/jquery.min.js"></script>
@@ -226,14 +230,26 @@
 	        data : data,
 	        cache: false,  
 	        url: url,   
-	        success: function(data){      
-	            if (data==1) {
+	        success: function(data){  
+	        	var call_back=	data.split('**');    
+	            if (call_back[0]==1) {
 					$("#response_msg").html("Data Success Fully Saved.");
 					$("#response_msg").fadeOut(1000);
-	            }else if (data==2) {
+	            }else if (call_back[0]==2) {
 	            	$("#response_msg").html("Data Not Inserted.");
 					$("#response_msg").fadeOut(1000);
-	            }               
+	            }
+
+	            $('#exam_name').val('');
+	            $('#question_description').val('');
+	            $('#txt_question_opt1').val('');
+	            $('#txt_question_opt2').val('');
+	            $('#txt_question_opt3').val('');
+	            $('#txt_question_opt4').val('');
+	            $('#txt_question_opt5').val('');
+	            $('#txt_question_solution').val('');
+	            $('#txt_question_number').val(call_back[1]);
+
 	        }   
 	    });   
 	    return false;   

@@ -1,5 +1,6 @@
 <?php
 	require_once('../../includes/common.php');
+	header('Content-Type: text/html; charset=utf-8');
 	extract($_REQUEST);
 	if ($action=="save_update") {
 		$insertedBy = 1;
@@ -7,6 +8,10 @@
 		$examID     = return_next_id("sr_pre_exam_mst","id",$where_cond="");
 		$qID     	= return_next_id("sr_pre_exam_question_dtls","id",$where_cond="");
 		$examMaxID  = return_max_id("sr_pre_exam_mst","id",$where_cond="");
+
+		/*echo secure($txt_question_solution);
+		die;*/
+
 		if ($exam_name!="") {
 			//echo $cbo_exam_taker;
 			$exam_mst_tbl = "sr_pre_exam_mst";
@@ -35,10 +40,17 @@
 			$rID4 = sql_insert($ans_dtls_tbl,$ans_dtls_colomn_name,$ans_dtls_data_arr);
 			$rID5 = sql_insert($solution_dtls_tbl,$solution_dtls_colomn_name,$solution_dtls_data_arr);
 
+			$qusnum  = return_max_id("sr_pre_exam_question_dtls","question_number",$where_cond="");
+		    if (empty($qusnum)) {
+		    	$qusNumber = 1;
+		    }else{
+		    	$qusNumber = $qusnum+1;
+		    }
+
 			if ($rID1 && $rID2 && $rID3 && $rID4 && $rID5) {
-				echo "1";
+				echo "1**".$qusNumber;
 			}else{
-				echo "2";
+				echo "2**".$qusNumber;
 			}
 		
 		}else{
