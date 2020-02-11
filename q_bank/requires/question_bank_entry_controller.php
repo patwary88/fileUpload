@@ -76,10 +76,18 @@
 			$rID4 = sql_insert($ans_dtls_tbl,$ans_dtls_colomn_name,$ans_dtls_data_arr);
 			$rID5 = sql_insert($solution_dtls_tbl,$solution_dtls_colomn_name,$solution_dtls_data_arr);
 			//echo $rID2."==".$rID3."==".$rID4."==".$rID5;
-			if ($rID2==1 && $rID3==1 && $rID4==1 && $rID5==1) {
-				echo "1";
+			$qusnum  = return_max_id("sr_pre_exam_question_dtls","question_number",$where_cond="");
+		    
+		    if (empty($qusnum)) {
+		    	$qusNumber = 1;
+		    }else{
+		    	$qusNumber = $qusnum+1;
+		    }
+
+			if ($rID2 && $rID3 && $rID4 && $rID5) {
+				echo "1**".$qusNumber;
 			}else{
-				echo "2";
+				echo "2**".$qusNumber;
 			}
 		}
 		
